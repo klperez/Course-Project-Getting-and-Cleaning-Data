@@ -46,3 +46,19 @@ head(tidy_data1[,3:9],6)
 # 4. Appropriately labels the data set with descriptive variable names. 
 
 head(tidy_data1[,4:9],6)
+# 5. From the data set in step 4, creates a second, independent tidy data 
+#    set with the average of each variable for each activity and each subject.
+
+tidymelt<-melt(tidy_data,id=c("ids","activity"),measure.vars 
+               = c("tBodyAcc.mean...X",
+                   "tBodyAcc.mean...Y",
+                   "tBodyAcc.mean...Z",
+                   "tBodyAcc.std...X",
+                   "tBodyAcc.std...Y",
+                   "tBodyAcc.std...Z"))
+
+res<-dcast(tidymelt,ids+activity~variable,mean)
+
+#####################################################
+
+write.table(x = res,file = "result.txt",row.names = F)
